@@ -1,0 +1,82 @@
+#include<reg52.h>
+#include<string.h>
+#define uchar unsigned char
+uchar a[30]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,};
+uchar b[]={'h','i'};
+uchar c[]={'A',' ','r','o','b','o','t'};
+uchar no[]={'S','o','r','r','y','I','d','o','n','"','t','k','n','o','w'};
+uchar d[]={'7'};
+uchar e[]={'o','k'};
+uchar r[]={'n','o',' ','p','r','o','b','l','e','m'};
+int s ,i,m,n,x,z,l;
+void delay(int s)
+{int j,k;
+  for(j=s;j>0;j--)
+    for(k=125;k>0;k--);
+}
+void init()
+{
+	SCON=0X50;
+	TMOD=0x20;
+	TH1=0xfd;
+	TL1=0xfd;
+	EA=1;
+	ET0=1;
+	TR1=1;
+	SM0=0;
+	SM1=1;
+	REN=1;
+	ES=1;
+}
+void main()
+{ P1=0x00;
+	init();
+	while(1)
+	{
+			if(strcmp(a,"hello")==0)
+											{ i=0;					
+								do{
+								SBUF=b[n];
+								while(!TI);
+								 TI=0;
+								n++;}while(n==1);
+							}
+	
+							if(strcmp(a,"who are you?")==0)
+												{i=0;
+									for(m=0;m<7;m++)
+								{	SBUF=c[m];
+									while(!TI);
+									 TI=0;	}}
+						if(strcmp(a,"how old are you?")==0)
+										{i=0;
+								SBUF=d[0];
+									while(!TI);
+									 TI=0;	}
+							if(strcmp(a,"turn on a light")==0)
+										{i=0;
+											P1=0xfe;
+									for(z=0;z<2;z++)
+								{	SBUF=e[z];
+									while(!TI);
+									 TI=0;	}}
+					if(strcmp(a,"turn off a light")==0)
+										{i=0;P1=0xff;
+									for(l=0;l<10;l++)
+								{	SBUF=r[l];
+									while(!TI);
+									 TI=0;	}}				 
+				/*{	for(x=0;x<15;x++)
+								{	SBUF=no[x];
+									while(!TI);
+									 TI=0;	}
+i=0;}*/
+}
+}
+
+void ser() interrupt 4
+{
+	a[i]=SBUF;
+	RI=0;
+	i++;
+}
